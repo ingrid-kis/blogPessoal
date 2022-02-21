@@ -6,11 +6,14 @@ import javax.persistence.Entity; //indica que essa classe será uma classe do JP
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table; //indica que essa anotação, dentro da Entidade, será uma tabela
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /** Anotações @ definem certos tipos de comportamentos para as classes.
  *  @Table(name = "postagem") :indica que nome da tabela será postagem.
@@ -22,6 +25,7 @@ import javax.validation.constraints.Size;
  *  @Temporal(TemporalType.TIMESTAMP) :anotação que indica tempo e seu tipo, especificado no parâmetro ().
  *  private Date date = new java.sql.Date(System.currentTimeMillis()) :captura o tempo exato da informação
  *  que entrou na classe em qual está inserido.
+ *  @JsonIgnoreProperties() :passar como parâmetro a propriedade que será ignorada no método abaixo (no caso, Tema).
  *  @author ingrid-kis
  */
 
@@ -45,6 +49,10 @@ public class Postagem {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date = new java.sql.Date(System.currentTimeMillis());
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
 	
 	public long getId() {
 		return id;
@@ -70,6 +78,11 @@ public class Postagem {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	public Tema getTema() {
+		return tema;
+	}
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 	
 }
