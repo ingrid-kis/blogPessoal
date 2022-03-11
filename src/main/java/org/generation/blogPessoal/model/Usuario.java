@@ -30,6 +30,18 @@ public class Usuario {
 	private String senha;
 
 	
+	//método construtor para Testes
+	
+	public Usuario(Long id, String nome, String usuario, String senha) {
+		this.id=id;
+		this.nome=nome;
+		this.usuario=usuario;
+		this.senha=senha;
+	}
+	
+	public Usuario() {}
+	
+	
 	public long getId() {
 		return id;
 	}

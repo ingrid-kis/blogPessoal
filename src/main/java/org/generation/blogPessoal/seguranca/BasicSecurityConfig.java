@@ -3,6 +3,9 @@ package org.generation.blogPessoal.seguranca;
  * http.authorizeRequests().antMatchers("/usuarios/logar").permitAll() =permite o endind point determinado ("//")
  * acessar esse caminho sem precisar de um TOKEN
  * .anyRequest().authenticated() = no Header o token deverá ser informado
+ * sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS =bach-end não controla o tempo de sessão do user
+ * o usuario nao é deslogado apos tempo determinado.
+ * .csrf().disable() = csrf tipo de ataque recorrente, aqui desabilitado para deixar o código mais simples por motivos didáticos
  */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +27,11 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
+		auth.inMemoryAuthentication().withUser("ingrid").password(passwordEncoder().encode("ingrid")).authorities("ROLE_ADMIN");
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEnconder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
@@ -36,6 +40,8 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/usuarios/logar").permitAll()
 		.antMatchers("/usuarios/cadastrar").permitAll()
+		.antMatchers("/usuarios/all").permitAll()
+		.antMatchers("/usuarios/atualizar").permitAll()
 		.anyRequest().authenticated()
 		.and().httpBasic()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
