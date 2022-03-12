@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 /** @RestController :informa ao Spring que esta é uma classe Controller, controladora.
  *  @RequestMapping ("") :informa qual URI e parâmetro () que esta classe será acessada.
  *  @CrossOrigin("*") :indica que esta classe aceitará informações de qualquer origem.
@@ -49,17 +54,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/postagens")
+@Tag(name = "Recursos de Postagem", description = "Administração das postagens")
 @CrossOrigin("*")
 public class PostagemController {
 	
 	@Autowired
 	private PostagemRepository repository;
 	
+	@Operation(summary = "Busca lista de postagens")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Retorna todas as postagens"),
+			@ApiResponse(responseCode = "400", description = "Retorno sem postagens"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+	})
 	@GetMapping
 	public ResponseEntity<List<Postagem>> GetAll(){
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
+    @Operation(summary = "Busca postagem por id")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Retorna postagem existente"),
+			@ApiResponse(responseCode = "400", description = "Postagem inexistente"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+	})
 	@GetMapping("/{id}")
 	public ResponseEntity<Postagem> getById(@PathVariable long id){
 		return repository.findById(id)
@@ -67,26 +85,47 @@ public class PostagemController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
+    @Operation(summary = "Busca postagem pelo título")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Retorna postagem de acordo com o título"),
+			@ApiResponse(responseCode = "400", description = "Retorno sem postagem"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+	})
 	@GetMapping("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> getByTitulo(@PathVariable String titulo){
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 	
+    @Operation(summary = "Cria nova postagem")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Postagem criado com sucesso"),
+			@ApiResponse(responseCode = "400", description = "Erro na requisição"),
+            @ApiResponse(responseCode = "422", description = "Postagem já existente"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+	})
 	@PostMapping
 	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem)); 
 	}
 
+    @Operation(summary = "Atualiza postagem existente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Retorna postagem atualizada"),
+			@ApiResponse(responseCode = "400", description = "Erro na requisição"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+	})
 	@PutMapping
 	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}	 
 	
+    @Operation(summary = "Deleta postagem existente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Postagem deletada"),
+			@ApiResponse(responseCode = "400", description = "Id de postagem inválido"),
+	})
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
-	}
-	
-	
-	
+	}	
 }
