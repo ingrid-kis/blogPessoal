@@ -1,7 +1,6 @@
 package org.generation.blogPessoal.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity; //indica que essa classe será uma classe do JPA
 import javax.persistence.GeneratedValue;
@@ -9,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table; //indica que essa anotação, dentro da Entidade, será uma tabela
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
