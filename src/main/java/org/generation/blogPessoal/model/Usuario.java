@@ -25,20 +25,20 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
-	@NotNull(message = "O atributo Nome é Obrigatório!")
+	@NotNull(message = "O atributo nome é obrigatório!")
 	@Size(min=2, max=100)
 	private String nome;
 	
 	@Schema(example="email@email.com.br")
-	@NotNull(message="O atributo Usuário é Obrigatório!")
-	@Email(message= "O atributo Usuário deve ser um e-mail válido!")
+	@NotNull(message="O atributo usuário é obrigatório!")
+	@Email(message= "O atributo usuário deve ser um e-mail válido!")
 	private String usuario;
 	
-	@NotBlank(message = "O atributo Senha é Obrigatório!")
+	@NotBlank(message = "O atributo senha é obrigatório!")
 	@NotNull
-	@Size(min=5, message = "A senha deve ter no mínimo 5 caracteres")
+	@Size(min=5, message= "A senha deve ter no mínimo 5 caracteres")
 	private String senha;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
@@ -56,11 +56,12 @@ public class Usuario {
 	
 	public Usuario() {}
 	
+
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

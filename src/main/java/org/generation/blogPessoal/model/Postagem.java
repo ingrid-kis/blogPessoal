@@ -50,12 +50,12 @@ public class Postagem {
 
 	@NotBlank(message = "O atributo título é obrigatório!")
 	@NotNull // não nulo
-	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
+	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 5 e no máximo 100 caracteres")
 	private String titulo;
 
 	@NotBlank(message = "O atributo texto é obrigatório!")
 	@NotNull
-	@Size(min = 10, max = 500, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
+	@Size(min = 10, max = 500, message = "O atributo título deve conter no mínimo 5 e no máximo 100 caracteres")
 	private String texto;
 
 	@UpdateTimestamp

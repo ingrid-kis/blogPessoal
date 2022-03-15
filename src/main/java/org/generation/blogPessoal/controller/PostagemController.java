@@ -2,6 +2,8 @@ package org.generation.blogPessoal.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.generation.blogPessoal.model.Postagem;
 import org.generation.blogPessoal.repository.PostagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +106,7 @@ public class PostagemController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
 	})
 	@PostMapping
-	public ResponseEntity<Postagem> post (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> post (@Valid @RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem)); 
 	}
 
@@ -115,7 +117,7 @@ public class PostagemController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
 	})
 	@PutMapping
-	public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> put (@Valid @RequestBody Postagem postagem){
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
 	}	 
 	
