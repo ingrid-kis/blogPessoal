@@ -51,7 +51,7 @@ public class UsuarioControllerTest {
 
 		//GIVEN -> dado as infos para criar um usuário
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L, 
-			"Paulo Antunes", "paulo_antunes@email.com.br", "12345"));
+				"Paulo Antunes","https://i.imgur.com/FETvs2O.jpg", "paulo@email.com.br", "12345"));
 
 		//WHEN -> quando criar o usuario, fazendo uma requisição POST de rota "/usuarios/cadastrar"
 		ResponseEntity<Usuario> resposta = testRestTemplate
@@ -69,10 +69,10 @@ public class UsuarioControllerTest {
 	public void naoDeveDuplicarUsuario() {
 
 		usuarioService.CadastrarUsuario(new Usuario(0L, 
-			"Maria da Silva", "maria_silva@email.com.br", "13465278"));
+			"Maria da Silva", "https://i.imgur.com/NtyGneo.jpg","maria_silva@email.com.br", "13465278"));
 
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L, 
-			"Maria da Silva", "maria_silva@email.com.br", "13465278"));
+			"Maria da Silva", "https://i.imgur.com/NtyGneo.jpg","maria_silva@email.com.br", "13465278"));
 
 		ResponseEntity<Usuario> resposta = testRestTemplate
 			.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
@@ -87,10 +87,10 @@ public class UsuarioControllerTest {
 		
 		//GIVEN -> dado que tenho um usuario no sistema
 		Optional<Usuario> usuarioCreate = usuarioService.CadastrarUsuario(new Usuario(0L, 
-			"Juliana Andrews", "juliana_andrews@email.com.br", "juliana123"));
+			"Juliana Andrews","https://i.imgur.com/yDRVek7.jpg","juliana_ramos@email.com.br", "juliana123"));
 		
 		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(), 
-			"Juliana Andrews Ramos","juliana_ramos@email.com.br", "juliana123");
+			"Juliana Andrews Ramos", "https://i.imgur.com/T12NIp9","juliana_ramos@email.com.br", "juliana123");
 		
 		//WHEN 	-> quando eu envio uma atualização de nome para "/usuarios/atualizar"
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(usuarioUpdate);
@@ -112,10 +112,10 @@ public class UsuarioControllerTest {
 
 		//GIVEN -> Dado que tenho 2 usuários no sistema cadastrados
 		usuarioService.CadastrarUsuario(new Usuario(0L, 
-			"Sabrina Sanches", "sabrina_sanches@email.com.br", "sabrina123"));
+			"Sabrina Sanches", "https:i.imgur.com/EcJG8kB.jpg", "sabrina_sanches@email.com.br", "sabrina123"));
 		
 		usuarioService.CadastrarUsuario(new Usuario(0L, 
-			"Ricardo Marques", "ricardo_marques@email.com.br", "ricardo123"));
+				"Ricardo Marques", "https:i.imgur.com/Sk5SjWE.jpg", "ricardo_marques@email.com.br", "ricardo123"));
 		
 		//WHEN -> requisição GET na rota "/usuarios/all", passando credencial válida
 		ResponseEntity<String> resposta = testRestTemplate

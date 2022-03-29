@@ -2,8 +2,7 @@ package org.generation.blogPessoal.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-/* @Entity - p/ JPA entender que se trata de uma tabela e faça o mapeamento
- */
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +17,9 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+/* @Entity - p/ JPA entender que se trata de uma tabela e faça o mapeamento
+ */
 
 @Entity
 @Table(name="tb_usuario")
@@ -40,18 +42,24 @@ public class Usuario {
 	@NotNull
 	@Size(min=5, message= "A senha deve ter no mínimo 5 caracteres")
 	private String senha;
+	
+	@Size(max=5000)
+	private String foto;
 
+	private String tipo;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
 	
 	//método construtor para Testes
 	
-	public Usuario(Long id, String nome, String usuario, String senha) {
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
 		this.id=id;
 		this.nome=nome;
 		this.usuario=usuario;
 		this.senha=senha;
+		this.foto=foto;
 	}
 	
 	public Usuario() {}
@@ -88,13 +96,29 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
 
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	
 	public List<Postagem> getPostagem() {
 		return postagem;
 	}
-
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
+
 	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}	
 }
